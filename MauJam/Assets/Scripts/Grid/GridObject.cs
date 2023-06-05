@@ -17,11 +17,11 @@ public class GridObject
     public override string ToString()
     {
         var unitString = "";
-        foreach(var unit in unitList)
+        foreach (var unit in unitList)
         {
             unitString += unit + "\n";
         }
-        return gridPosition.ToString() +"\n" + unitString;   // patlayabilir
+        return gridPosition.ToString() + "\n" + unitString;   // patlayabilir
     }
     public void AddUnit(Unit unit)
     {
@@ -32,4 +32,5 @@ public class GridObject
         unitList.Remove(unit);
     }
     public List<Unit> GetUnitList() => unitList;
+    public bool HasAnyUnit() => unitList.Count > 0;
 }

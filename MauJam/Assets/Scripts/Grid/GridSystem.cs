@@ -48,8 +48,9 @@ public class GridSystem
             }
         }
     }
-    public GridObject GetGridObject(GridPosition gridPosition)
-    {
-        return gridObjectsArray[gridPosition.x, gridPosition.z];
-    }
+    public GridObject GetGridObject(GridPosition gridPosition) => gridObjectsArray[gridPosition.x, gridPosition.z];
+    public bool IsValidGridPosition(GridPosition gridPosition) => gridPosition.x >= 0 && gridPosition.z >= 0 && gridPosition.x < width && gridPosition.z < height;
+
+    public int GetWidth() => width;
+    public int GetHeight() => height; 
 }
