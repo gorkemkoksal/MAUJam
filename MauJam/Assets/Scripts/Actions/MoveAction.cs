@@ -9,8 +9,16 @@ public class MoveAction : MonoBehaviour
     [SerializeField] private int maxMoveDistance;
     private Unit unit;
     private bool isMoving;
+    private State currentState;
     //Animator
     private Vector3 targetPosition;
+
+    private enum State
+    {
+        WaitingEnemyTurn,
+        Moving,
+        Collecting
+    }
     private void Awake()
     {
         unit = GetComponent<Unit>();

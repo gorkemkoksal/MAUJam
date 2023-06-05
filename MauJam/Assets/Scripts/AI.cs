@@ -5,7 +5,18 @@ using UnityEngine;
 
 public class AI : MonoBehaviour
 {
+    private State currentState;
+    private enum State
+    {
+        WaitingEnemyTurn,
+        Moving,
+        Collecting
+    }
     private float timer=2f;
+    private void Awake()
+    {
+        currentState = State.WaitingEnemyTurn;
+    }
     private void Start()
     {
         TurnSystem.Instance.OnTurnChange += AI_OnTurnChange;
