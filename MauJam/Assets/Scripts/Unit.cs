@@ -18,7 +18,8 @@ public class Unit : MonoBehaviour
     }
     private void Update()
     {
-        print(TurnSystem.Instance.IsPlayerTurn());
+        if(!isEnemy && TurnSystem.Instance.Tu)
+        TurnSystem.Instance.State
         var newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         if (newGridPosition != gridPosition)
         {
@@ -28,6 +29,7 @@ public class Unit : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && TurnSystem.Instance.IsPlayerTurn()) //deneysel
         {
             var mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            print(mouseGridPosition);
             if (moveAction.IsValidActionGridPosition(mouseGridPosition))
             {
                 moveAction.Move(mouseGridPosition);

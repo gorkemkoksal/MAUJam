@@ -1,28 +1,28 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GridSystem
+public class GridSystem<TGridObject>
 {
     private int height, width;
     private float cellsize;
-    private GridObject[,] gridObjectsArray;
-    public GridSystem(int height, int width, float cellSize)
+    private TGridObject[,] gridObjectsArray;
+    public GridSystem(int height, int width, float cellSize, Func<GridSystem<TGridObject>, GridPosition, TGridObject> createGridObject)
     {
         this.height = height;
         this.width = width;
         this.cellsize = cellSize;
 
-        gridObjectsArray = new GridObject[width, height];
+        gridObjectsArray = new TGridObject[width, height];
 
         for (int x = 0; x < width; x++)
         {
             for (int z = 0; z < height; z++)
             {
                 var gridPosition = new GridPosition(x, z);
-                new GridObject(this, gridPosition);
-                gridObjectsArray[x, z] = new GridObject(this, gridPosition);
+                gridObjectsArray[x, z] = createGridObject(this,gridPosition);
             }
         }
     }
@@ -44,13 +44,13 @@ public class GridSystem
 
                 Transform debugTransform = GameObject.Instantiate(debugPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
                 var gridDebugObject = debugTransform.GetComponent<GridDebugObject>();
-                gridDebugObject.SetGridObject(GetGridObject(gridPosition));
+                gridDebugObject.SetGridObject(GetGridObject(gridPosition) as GridObject);
             }
         }
     }
-    public GridObject GetGridObject(GridPosition gridPosition) => gridObjectsArray[gridPosition.x, gridPosition.z];
+    public TGridObject GetGridObject(GridPosition gridPosition) => gridObjectsArray[gridPosition.x, gridPosition.z];
     public bool IsValidGridPosition(GridPosition gridPosition) => gridPosition.x >= 0 && gridPosition.z >= 0 && gridPosition.x < width && gridPosition.z < height;
 
     public int GetWidth() => width;
-    public int GetHeight() => height; 
+    public int GetHeight() => height;
 }

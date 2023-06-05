@@ -5,13 +5,21 @@ using UnityEngine;
 
 public class TurnSystem : MonoBehaviour
 {
+    public TurnState currentState;
+    public enum TurnState
+    {
+        PlayerTurn,
+        Transition,
+        EnemyTurn
+    }
     public static TurnSystem Instance { get; private set; }
     private int turnNumber=1;
-    public Action OnTurnChange;
     private bool isPlayerTurn = true;
+    enum
     private void Awake()
     {
         Instance = this;
+        currentState = TurnState.PlayerTurn;
     }
     public void NextTurn()
     {
@@ -20,7 +28,6 @@ public class TurnSystem : MonoBehaviour
             turnNumber++;
         }
         isPlayerTurn = !isPlayerTurn;
-        OnTurnChange?.Invoke();
     }
     public bool IsPlayerTurn()=>isPlayerTurn;
     public int GetTurnNumber() => turnNumber;
