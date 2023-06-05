@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +8,7 @@ public class MoveAction : MonoBehaviour
     [SerializeField] private float rotationSpeed;
     [SerializeField] private int maxMoveDistance;
     private Unit unit;
+    private bool isMoving;
     //Animator
     private Vector3 targetPosition;
     private void Awake()
@@ -18,8 +18,9 @@ public class MoveAction : MonoBehaviour
     }
     private void Update()
     {
-        if (Vector3.Distance(targetPosition, transform.position) > targetDiff)
+        if (Vector3.Distance(targetPosition, transform.position) > targetDiff) //deneysel
         {
+            isMoving = true;
             var moveDir = (targetPosition - transform.position).normalized;
             transform.position += moveDir * movementSpeed * Time.deltaTime;
 
@@ -28,7 +29,11 @@ public class MoveAction : MonoBehaviour
             var rotation = Quaternion.LookRotation(lookPos);
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
         }
-
+        else if(isMoving)
+        {
+            isMoving = false;
+            TurnSystem.Instance.NextTurn();            //deneysel
+        }
     }
     public void Move(GridPosition gridPosition)
     {

@@ -33,11 +33,11 @@ public class CameraController : MonoBehaviour
         var rotationVector = new Vector3(0, 0, 0);
         if (Input.GetKey(KeyCode.Q))
         {
-            rotationVector.x = 1f;
+            rotationVector.y = 1f;
         }
         if (Input.GetKey(KeyCode.E))
         {
-            rotationVector.x = -1f;
+            rotationVector.y = -1f;
         }
         transform.eulerAngles += rotationVector * rotationSpeed * Time.deltaTime;
     }

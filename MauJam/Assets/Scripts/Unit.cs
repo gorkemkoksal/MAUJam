@@ -6,6 +6,7 @@ public class Unit : MonoBehaviour
 {
     private GridPosition gridPosition;
     private MoveAction moveAction;
+    [SerializeField] private bool isEnemy;
     private void Awake()
     {
         moveAction = GetComponent<MoveAction>();
@@ -17,13 +18,14 @@ public class Unit : MonoBehaviour
     }
     private void Update()
     {
+        print(TurnSystem.Instance.IsPlayerTurn());
         var newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         if (newGridPosition != gridPosition)
         {
             LevelGrid.Instance.UnitMovedGridPosition(this, gridPosition, newGridPosition);
             gridPosition = newGridPosition;
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && TurnSystem.Instance.IsPlayerTurn()) //deneysel
         {
             var mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
             if (moveAction.IsValidActionGridPosition(mouseGridPosition))
@@ -34,4 +36,5 @@ public class Unit : MonoBehaviour
     }
     public MoveAction GetMoveAction() => moveAction;
     public GridPosition GetGridPosition() => gridPosition;
+    public bool IsEnemy=> isEnemy;
 }
